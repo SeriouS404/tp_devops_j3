@@ -15,15 +15,13 @@ jobs:
         with:
           python-version: latest
 
+      - name: Install Azure CLI
+        run: |
+          pip install azure-cli --upgrade
 
-      - name: install azure cli
-        uses: pip install azure-cli
-          with:
-            version: latest
-
-      - name: azure login
-        uses: az login --tenant ${{ secrets.AZURE_TENANT_ID }} -u ${{ secrets.AZURE_USERNAME }} -p ${{ secrets.AZURE_PASSWORD }}
-
+      - name: Azure Login
+        run: |
+          az login --tenant ${{ secrets.AZURE_TENANT_ID }} -u ${{ secrets.AZURE_USERNAME }} -p ${{ secrets.AZURE_PASSWORD }}
 
       - name: Checkout Repository
         uses: actions/checkout@v2
