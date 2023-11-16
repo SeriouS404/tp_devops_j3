@@ -36,3 +36,20 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate
+
+      - name: Terraform Plan 
+        run: terraform plan
+
+      - name: verif_b4_apply
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ secret.TOKEN }}
+          approvers: SeriouS404          #mon user ?
+          minimum-approvals: 1
+          issue-title: "Need human validation before apply !"
+          issue-body: "Please approve or deny the apply"
+          exclude-workflow-initiator-as-approver: false
+
+       - name: Terraform Apply
+        run: terraform apply -auto-approve 
+       
