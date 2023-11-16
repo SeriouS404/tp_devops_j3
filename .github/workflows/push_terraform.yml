@@ -40,14 +40,31 @@ jobs:
       - name: Terraform Plan 
         run: terraform plan
 
+      - name: 'Install Infracost'
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
+
+    
+      - name: 'Run Infracost'
+        run: |
+          infracost breakdown --path . --format json --out-file /tmp/infracost.json
+        env:
+          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+
+    
+      - name: 'Upload Infracost result'
+        run: |
+        infracost output --path /tmp/infracost.json --format github-comment > infracost-comment.md
+        cat infracost-comment.md
+
       - name: verif_b4_apply
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ secrets.TOKEN }}
           approvers: SeriouS404          # Mon utilisateur ?
           minimum-approvals: 1
-          issue-title: "Need human validation before apply !"
-          issue-body: "Please approve or deny the apply"
+          issue-title: "Une petite verif... !"
+          issue-body: "S'agirait de cliquer !"
           exclude-workflow-initiator-as-approver: false
 
       - name: Terraform Apply
