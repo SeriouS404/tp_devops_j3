@@ -44,12 +44,11 @@ jobs:
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ secret.TOKEN }}
-          approvers: SeriouS404          #mon user ?
+          approvers: SeriouS404          # Mon utilisateur ?
           minimum-approvals: 1
           issue-title: "Need human validation before apply !"
           issue-body: "Please approve or deny the apply"
           exclude-workflow-initiator-as-approver: false
 
-       - name: Terraform Apply
+      - name: Terraform Apply
         run: terraform apply -auto-approve 
-       
