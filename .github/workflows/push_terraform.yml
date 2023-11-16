@@ -43,7 +43,7 @@ jobs:
       - name: verif_b4_apply
         uses: trstringer/manual-approval@v1
         with:
-          secret: ${{ secret.TOKEN }}
+          secret: ${{ secrets.TOKEN }}
           approvers: SeriouS404          # Mon utilisateur ?
           minimum-approvals: 1
           issue-title: "Need human validation before apply !"
