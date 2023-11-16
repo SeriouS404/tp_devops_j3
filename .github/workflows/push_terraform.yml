@@ -44,18 +44,16 @@ jobs:
         run: |
           curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
 
-    
       - name: 'Run Infracost'
         run: |
           infracost breakdown --path . --format json --out-file /tmp/infracost.json
         env:
           INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
 
-    
       - name: 'Upload Infracost result'
         run: |
-        infracost output --path /tmp/infracost.json --format github-comment > infracost-comment.md
-        cat infracost-comment.md
+          infracost output --path /tmp/infracost.json --format github-comment > infracost-comment.md
+          cat infracost-comment.md
 
       - name: verif_b4_apply
         uses: trstringer/manual-approval@v1
@@ -68,4 +66,4 @@ jobs:
           exclude-workflow-initiator-as-approver: false
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve 
+        run: terraform apply -auto-approve
